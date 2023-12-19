@@ -16,4 +16,15 @@ export class UsersController {
             {},
         ]
     }
+
+    @Get('posts/comments')
+    getUsersPostsComments() {
+        return [
+            {
+                id: 1, comments: [
+                    { userId: 0, msg: 'hello' }
+                ]
+            }
+        ]
+    }
 }
