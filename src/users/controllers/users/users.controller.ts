@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Controller('users')
@@ -34,4 +34,9 @@ export class UsersController {
         console.log(request.body)
         response.send('user has been created')
     }
-}
+
+    @Post('create')
+    createUserSecond(@Body() userData) {
+
+    }
+} 
