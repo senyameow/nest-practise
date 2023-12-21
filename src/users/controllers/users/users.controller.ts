@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { Request, Response, response } from 'express';
 import { CreateUserDto } from 'src/users/dtos/createUserDto.dto';
 
@@ -43,8 +43,7 @@ export class UsersController {
     }
 
     @Get(':id')
-    getUserById(@Req() request: Request, @Res() response: Response) {
-        console.log(request.params)
-        response.send('got')
+    getUserById(@Param('id') id: string) {
+        return { id }
     }
 } 
