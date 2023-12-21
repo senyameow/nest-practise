@@ -42,8 +42,8 @@ export class UsersController {
         return {}
     }
 
-    @Get(':id')
-    getUserById(@Param('id') id: string) {
-        return { id }
+    @Get(':id/:postId')
+    getUserById(@Param('id') id: string, @Param('postId') postId) {
+        return { id, postId }
     }
 } 
