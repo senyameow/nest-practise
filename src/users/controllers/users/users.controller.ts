@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Query, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Request, Response, response } from 'express';
 import { CreateUserDto } from 'src/users/dtos/createUserDto.dto';
 
@@ -39,7 +39,7 @@ export class UsersController {
     }
 
     @Get(':id/:postId')
-    getUserById(@Param('id') id: string, @Param('postId') postId) {
+    getUserById(@Param('id', ParseIntPipe) id: number, @Param('postId') postId) {
         return { id, postId }
     }
 
@@ -50,10 +50,12 @@ export class UsersController {
     // for example i can filter users based on letters etc etc
 
     @Get()
-    getSortedUsers(@Query('sortBy') sortBy: string) {
+    getSortedUsers(@Query('sortAsc', ParseBoolPipe) sortBy: boolean) {
         console.log(sortBy)
-        return [
-            { username: 'senyameow', age: 18 }, { username: 'qweqwe', age: 54 }
+        return sortBy ? [
+            { username: 'senyameow', age: 54 }, { username: 'qweqwe', age: 18 }
+        ].sort((a, b) => a.age - b.age) : [
+            { username: 'senyameow', age: 54 }, { username: 'qweqwe', age: 18 }
         ]
     }
 
@@ -67,5 +69,6 @@ export class UsersController {
     // for this purposes we need class validator and class transformer
 
 
+    // we can also validate query and row params
 
 } 
