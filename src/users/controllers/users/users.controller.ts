@@ -1,14 +1,9 @@
-import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
 import { Request, Response, response } from 'express';
 import { CreateUserDto } from 'src/users/dtos/createUserDto.dto';
 
 @Controller('users')
 export class UsersController {
-
-    @Get()
-    getUsers() {
-        return { username: 'senyameow', age: 18 }
-    }
 
     @Get('posts')
     getUsersPosts() {
@@ -45,5 +40,19 @@ export class UsersController {
     @Get(':id/:postId')
     getUserById(@Param('id') id: string, @Param('postId') postId) {
         return { id, postId }
+    }
+
+    // query params!
+
+    // query params are essential for filtering
+
+    // for example i can filter users based on letters etc etc
+
+    @Get()
+    getSortedUsers(@Query('sortBy') sortBy: string) {
+        console.log(sortBy)
+        return [
+            { username: 'senyameow', age: 18 }, { username: 'qweqwe', age: 54 }
+        ]
     }
 } 
