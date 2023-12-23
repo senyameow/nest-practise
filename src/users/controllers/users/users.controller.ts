@@ -1,9 +1,14 @@
-import { Body, Controller, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Query, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseIntPipe, Post, Query, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Request, Response, response } from 'express';
 import { CreateUserDto } from 'src/users/dtos/createUserDto.dto';
+import { UsersService } from 'src/users/services/users/users.service';
 
 @Controller('users')
 export class UsersController {
+
+    constructor(private userService: UsersService) {
+
+    }
 
     @Get('posts')
     getUsersPosts() {
@@ -50,9 +55,9 @@ export class UsersController {
     // for example i can filter users based on letters etc etc
 
     @Get()
-    getSortedUsers(@Query('sortAsc', ParseBoolPipe) sortBy: boolean) {
-        console.log(sortBy)
-        return sortBy ? [
+    getSortedUsers(@Query('sortAsc', ParseBoolPipe) sortAsc: boolean) {
+        console.log(sortAsc)
+        return sortAsc ? [
             { username: 'senyameow', age: 54 }, { username: 'qweqwe', age: 18 }
         ].sort((a, b) => a.age - b.age) : [
             { username: 'senyameow', age: 54 }, { username: 'qweqwe', age: 18 }
