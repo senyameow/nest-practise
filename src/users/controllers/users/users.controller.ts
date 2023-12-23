@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseIntPi
 import { Request, Response, response } from 'express';
 import { CreateUserDto } from 'src/users/dtos/createUserDto.dto';
 import { UsersService } from 'src/users/services/users/users.service';
+import { createUserType } from 'src/utils/types';
 
 @Controller('users')
 export class UsersController {
@@ -36,12 +37,7 @@ export class UsersController {
         response.send('user has been created')
     }
 
-    @Post('create')
-    @UsePipes(new ValidationPipe())
-    createUserSecond(@Body() userData: CreateUserDto) {
-        console.log(userData)
-        return {}
-    }
+
 
     @Get(':id/:postId')
     getUserById(@Param('id', ParseIntPipe) id: number, @Param('postId') postId) {
@@ -75,5 +71,20 @@ export class UsersController {
 
 
     // we can also validate query and row params
+
+    @Get('all')
+    getAllUsers() {
+        return this.userService.fetchUsers()
+    }
+
+    @Post('create')
+    @UsePipes(new ValidationPipe())
+    createUserSecond(@Body() userData: createUserType) {
+        // better practice would be to create custom type for handling creation of user
+        // since not always all from Dto type we wanna use while creating user
+        console.log(userData)
+        this.userService.createUser(userData)
+        return {}
+    }
 
 } 

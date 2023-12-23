@@ -1,13 +1,22 @@
 import { Injectable } from '@nestjs/common';
+import { createUserType } from 'src/utils/types';
 
 // Injectable basically means that we can inject this service anywhere in our app
 // services ressponsible for business logic, basically everything that my app needs to do
 @Injectable()
 export class UsersService {
     private users = [
-        { username: 'senyameow', age: 123 }, { username: 'qweqwe', age: 183 }, { username: 'senyameow', age: 54 }, { username: 'qweqwe', age: 18 }
+        { username: 'senyameow', age: 123, email: 'qe' }
     ]
+
+
     fetchUsers() {
         return this.users
+    }
+
+    createUser(userData: createUserType) {
+        this.users.push(
+            { username: userData.username, email: userData.email, age: Infinity }
+        )
     }
 }
