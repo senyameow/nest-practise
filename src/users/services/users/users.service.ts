@@ -6,7 +6,7 @@ import { createUserType } from 'src/utils/types';
 @Injectable()
 export class UsersService {
     private users = [
-        { username: 'senyameow', age: 123, email: 'qe' }
+        { username: 'senyameow', email: 'qe' }
     ]
 
 
@@ -15,8 +15,7 @@ export class UsersService {
     }
 
     createUser(userData: createUserType) {
-        this.users.push(
-            { username: userData.username, email: userData.email, age: Infinity }
-        )
+        this.users.push(userData)
+        return this.users
     }
 }

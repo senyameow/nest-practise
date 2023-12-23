@@ -83,8 +83,7 @@ export class UsersController {
         // better practice would be to create custom type for handling creation of user
         // since not always all from Dto type we wanna use while creating user
         console.log(userData)
-        this.userService.createUser(userData)
-        return {}
+        return this.userService.createUser(userData)
     }
 
 } 
