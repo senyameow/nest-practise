@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseIntPipe, Post, Query, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseArrayPipe, ParseBoolPipe, ParseIntPipe, Post, Query, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Request, Response, response } from 'express';
 import { CreateUserDto } from 'src/users/dtos/createUserDto.dto';
 import { UsersService } from 'src/users/services/users/users.service';
@@ -39,10 +39,10 @@ export class UsersController {
 
 
 
-    @Get(':id/:postId')
-    getUserById(@Param('id', ParseIntPipe) id: number, @Param('postId') postId) {
-        return { id, postId }
-    }
+    // @Get(':id/:postId')
+    // getUserById(@Param('id', ParseIntPipe) id: number, @Param('postId') postId) {
+    //     return { id, postId }
+    // }
 
     // query params!
 
@@ -84,6 +84,13 @@ export class UsersController {
         // since not always all from Dto type we wanna use while creating user
         console.log(userData)
         return this.userService.createUser(userData)
+    }
+
+    @Get(':id')
+    getUserById(@Param('id', ParseIntPipe) id: number) {
+        const user = this.userService.fetchUserById(id)
+        if (!user) throw new HttpException('User Not Found', HttpStatus.BAD_REQUEST)
+        else return user
     }
 
 } 
